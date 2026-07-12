@@ -67,9 +67,14 @@
     <form id="signupForm" style="display:none; flex-direction:column; gap:14px;">
       <input type="text" id="signupName" placeholder="Full Name" required style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
       <input type="email" id="signupEmail" placeholder="Email" required style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
+      <div>
+        <label for="signupBirthday" style="display:block; font-size:12px; color:var(--white-dim); margin-bottom:6px;">Birthday</label>
+        <input type="date" id="signupBirthday" required style="width:100%; background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
+      </div>
       <input type="password" id="signupPassword" placeholder="Password (min 6 characters)" required minlength="6" style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
+      <input type="text" id="signupCode" placeholder="Membership Code (ask staff if you don't have it)" style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
       <button type="submit" class="btn btn-primary" style="justify-content:center;" id="signupSubmitBtn">Create Account</button>
-      <p style="font-size:12px; text-align:center;">New accounts are reviewed before full access is granted.</p>
+      <p style="font-size:12px; text-align:center;">Have a membership code? Enter it above for instant access. Otherwise, your account will be reviewed by staff.</p>
     </form>
   </div>
 </main>
@@ -172,12 +177,14 @@ signupForm.addEventListener('submit', async (e) => {
   btn.textContent = 'Creating account...';
   const name = document.getElementById('signupName').value.trim();
   const email = document.getElementById('signupEmail').value.trim();
+  const birthday = document.getElementById('signupBirthday').value;
   const password = document.getElementById('signupPassword').value;
+  const membershipCode = document.getElementById('signupCode').value.trim();
 
   const { data, error } = await sb.auth.signUp({
     email,
     password,
-    options: { data: { full_name: name } }
+    options: { data: { full_name: name, birthday: birthday, membership_code: membershipCode } }
   });
 
   if (error) {
