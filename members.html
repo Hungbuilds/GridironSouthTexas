@@ -66,6 +66,22 @@
         <div class="hours-row"><span>Member Since</span><span id="infoSince">—</span></div>
       </div>
 
+      <div class="info-block" style="margin-bottom:20px;">
+        <h3>Birthday</h3>
+        <p style="margin-bottom:14px;">Optional — we'll use this for birthday promos, nothing else.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <input type="date" id="birthdayInput" style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:12px 14px; font-family:'Inter',sans-serif; font-size:14px;">
+          <button id="saveBirthdayBtn" class="btn btn-outline" style="padding:12px 20px;">Save</button>
+        </div>
+        <p id="birthdaySavedMsg" style="display:none; color:var(--white); font-size:13px; margin-top:10px;">Saved!</p>
+      </div>
+
+      <div id="perksBlock" class="info-block" style="display:none; margin-bottom:20px; border-color:var(--red);">
+        <span class="facility-tag">Member Exclusive</span>
+        <h3 style="margin-top:12px;">Merch Discount</h3>
+        <p id="perksContent" style="margin-bottom:14px;">Discount details coming soon.</p>
+      </div>
+
       <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
         <a href="tel:+18303747313" class="btn btn-primary">Call the Gym</a>
         <button id="logoutBtn" class="btn btn-outline">Log Out</button>
@@ -141,32 +157,51 @@ async function loadMemberPortal() {
       return;
     }
 
+    currentUserId = session.user.id;
+
     const { data: member, error } = await sb
       .from('members')
       .select('*')
       .eq('user_id', session.user.id)
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
 
     document.getElementById('loadingState').style.display = 'none';
     document.getElementById('profileState').style.display = 'block';
 
-    const displayName = (member && member.full_name) || session.user.user_metadata?.full_name || session.user.email;
+    if (!member) {
+      document.getElementById('welcomeHeading').textContent = 'Welcome';
+      document.getElementById('infoEmail').textContent = session.user.email;
+      const note = document.getElementById('statusNote');
+      note.textContent = "We couldn't find a membership record linked to your account yet. Please contact Gridiron Fitness staff to get this set up.";
+      note.style.display = 'block';
+      return;
+    }
+
+    const displayName = member.full_name || session.user.user_metadata?.full_name || session.user.email;
     document.getElementById('welcomeHeading').textContent = 'Welcome, ' + displayName.split(' ')[0];
-    document.getElementById('infoName').textContent = (member && member.full_name) || '—';
+    document.getElementById('infoName').textContent = member.full_name || '—';
     document.getElementById('infoEmail').textContent = session.user.email;
+    document.getElementById('infoMembership').textContent = member.membership_type || '—';
+    document.getElementById('infoStatus').textContent = member.status || '—';
+    document.getElementById('infoSince').textContent = member.start_date || '—';
 
-    if (member) {
-      document.getElementById('infoMembership').textContent = member.membership_type || '—';
-      document.getElementById('infoStatus').textContent = member.status || '—';
-      document.getElementById('infoSince').textContent = member.start_date || '—';
+    if (member.birthday) {
+      document.getElementById('birthdayInput').value = member.birthday;
+    }
 
-      if (member.status === 'pending') {
-        const note = document.getElementById('statusNote');
-        note.textContent = 'Your account is pending approval by Gridiron Fitness staff. Full access will be enabled once your membership is confirmed.';
-        note.style.display = 'block';
-      }
+    if (member.status === 'active') {
+      const perksBlock = document.getElementById('perksBlock');
+      perksBlock.style.display = 'block';
+      document.getElementById('perksContent').textContent =
+        'Discount code coming soon — Gridiron staff are finalizing the merch discount for active members.';
+    }
+
+    if (member.status === 'pending') {
+      const note = document.getElementById('statusNote');
+      note.textContent = 'Your account is pending approval by Gridiron Fitness staff. Full access will be enabled once your membership is confirmed.';
+      note.style.display = 'block';
     }
   } catch (err) {
     document.getElementById('loadingState').innerHTML =
@@ -176,9 +211,39 @@ async function loadMemberPortal() {
   }
 }
 
+let currentUserId = null;
+
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   await sb.auth.signOut();
   window.location.href = 'index.html';
+});
+
+document.getElementById('saveBirthdayBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('saveBirthdayBtn');
+  const value = document.getElementById('birthdayInput').value;
+  if (!currentUserId) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  const { error } = await sb
+    .from('members')
+    .update({ birthday: value || null })
+    .eq('user_id', currentUserId);
+
+  btn.disabled = false;
+  btn.textContent = 'Save';
+
+  const msg = document.getElementById('birthdaySavedMsg');
+  if (error) {
+    msg.textContent = 'Something went wrong: ' + error.message;
+    msg.style.color = 'var(--red-bright)';
+  } else {
+    msg.textContent = 'Saved!';
+    msg.style.color = 'var(--white)';
+  }
+  msg.style.display = 'block';
+  setTimeout(() => { msg.style.display = 'none'; }, 3000);
 });
 
 loadMemberPortal();
