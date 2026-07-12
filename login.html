@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<link rel="icon" type="image/webp" href="images/favicon.webp">
+<link rel="apple-touch-icon" href="images/favicon.webp">
+<meta name="theme-color" content="#c8102e">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Member Login | Gridiron Fitness</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://gridironfitnesstx.com/login.html">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo"><img src="images/gridiron-fitness-logo.webp" alt="Gridiron Fitness logo" class="logo-img">GRIDIRON<span>.</span>FITNESS</a>
+    <div class="nav-links">
+      <a href="index.html#facilities">Locations</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html#reviews">Reviews</a>
+      <a href="index.html#location">Hours</a>
+      <a href="studio.html">Gridiron Studio</a>
+      <a href="members.html">Members Portal</a>
+    </div>
+    <a href="tel:+18303747313" class="nav-cta">(830) 374-7313</a>
+    <button class="burger" id="burgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#facilities">Locations</a>
+    <a href="index.html#gallery">Gallery</a>
+    <a href="index.html#reviews">Reviews</a>
+    <a href="index.html#location">Hours</a>
+    <a href="studio.html">Gridiron Studio</a>
+    <a href="members.html">Members Portal</a>
+    <a href="tel:+18303747313" class="cta">Call (830) 374-7313</a>
+  </div>
+</header>
+
+<main class="legal-page">
+  <div class="wrap" style="max-width:440px;">
+    <div class="eyebrow" style="margin-bottom:16px; text-align:center;">Members Portal</div>
+    <h1 style="text-align:center; margin-bottom:8px;">Sign In</h1>
+    <p style="text-align:center; margin-bottom:32px;">Access your Gridiron Fitness member account.</p>
+
+    <div id="authTabs" style="display:flex; gap:8px; margin-bottom:24px;">
+      <button type="button" id="tabLogin" class="btn btn-primary" style="flex:1; justify-content:center;">Log In</button>
+      <button type="button" id="tabSignup" class="btn btn-outline" style="flex:1; justify-content:center;">Sign Up</button>
+    </div>
+
+    <div id="formMessage" style="display:none; padding:12px 16px; margin-bottom:20px; border:1px solid var(--line); font-size:14px;"></div>
+
+    <form id="loginForm" style="display:flex; flex-direction:column; gap:14px;">
+      <input type="email" id="loginEmail" placeholder="Email" required style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
+      <input type="password" id="loginPassword" placeholder="Password" required style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
+      <button type="submit" class="btn btn-primary" style="justify-content:center;" id="loginSubmitBtn">Log In</button>
+      <button type="button" id="forgotPasswordBtn" style="background:none; border:none; color:var(--white-dim); font-size:13px; text-decoration:underline; cursor:pointer; padding:4px;">Forgot password?</button>
+    </form>
+
+    <form id="signupForm" style="display:none; flex-direction:column; gap:14px;">
+      <input type="text" id="signupName" placeholder="Full Name" required style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
+      <input type="email" id="signupEmail" placeholder="Email" required style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
+      <input type="password" id="signupPassword" placeholder="Password (min 6 characters)" required minlength="6" style="background:var(--black-2); border:1px solid var(--line); color:var(--white); padding:14px 16px; font-family:'Inter',sans-serif; font-size:15px;">
+      <button type="submit" class="btn btn-primary" style="justify-content:center;" id="signupSubmitBtn">Create Account</button>
+      <p style="font-size:12px; text-align:center;">New accounts are reviewed before full access is granted.</p>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-brand">
+      <img src="images/gridiron-fitness-logo-2.webp" alt="Gridiron Fitness logo" class="footer-logo">
+      <span>GRIDIRON FITNESS</span>
+    </div>
+    <div class="footer-legal">
+      <p>© 2026 Gridiron Fitness. All rights reserved.</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-use.html">Terms of Use</a>
+        <a href="accessibility.html">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const burgerBtn = document.getElementById('burgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+burgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+// --- Supabase setup ---
+const { createClient } = supabase;
+const sb = createClient(
+  'https://izqtghreisuswcghfuyi.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6cXRnaHJlaXN1c3djZ2hmdXlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MjcxMjgsImV4cCI6MjA5NzIwMzEyOH0.mLuyldZARxOEvgXUHvDTRRxh9rWYr_iwkOMwoVw6x9E'
+);
+
+// --- Tab switching ---
+const tabLogin = document.getElementById('tabLogin');
+const tabSignup = document.getElementById('tabSignup');
+const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signupForm');
+
+function showLogin() {
+  loginForm.style.display = 'flex';
+  signupForm.style.display = 'none';
+  tabLogin.className = 'btn btn-primary';
+  tabSignup.className = 'btn btn-outline';
+  hideMessage();
+}
+function showSignup() {
+  loginForm.style.display = 'none';
+  signupForm.style.display = 'flex';
+  tabLogin.className = 'btn btn-outline';
+  tabSignup.className = 'btn btn-primary';
+  hideMessage();
+}
+tabLogin.addEventListener('click', showLogin);
+tabSignup.addEventListener('click', showSignup);
+
+// --- Message helper ---
+const formMessage = document.getElementById('formMessage');
+function showMessage(text, isError) {
+  formMessage.textContent = text;
+  formMessage.style.display = 'block';
+  formMessage.style.color = isError ? 'var(--red-bright)' : 'var(--white)';
+  formMessage.style.borderColor = isError ? 'var(--red)' : 'var(--line)';
+}
+function hideMessage() {
+  formMessage.style.display = 'none';
+}
+
+// --- Redirect if already logged in ---
+sb.auth.getSession().then(({ data }) => {
+  if (data.session) window.location.href = 'members.html';
+});
+
+// --- Login ---
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('loginSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Logging in...';
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    showMessage(error.message, true);
+    btn.disabled = false;
+    btn.textContent = 'Log In';
+  } else {
+    window.location.href = 'members.html';
+  }
+});
+
+// --- Signup ---
+signupForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('signupSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Creating account...';
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+
+  const { data, error } = await sb.auth.signUp({
+    email,
+    password,
+    options: { data: { full_name: name } }
+  });
+
+  if (error) {
+    showMessage(error.message, true);
+    btn.disabled = false;
+    btn.textContent = 'Create Account';
+    return;
+  }
+
+  // Update the auto-created members row with their name
+  if (data.user) {
+    await sb.from('members').update({ full_name: name }).eq('user_id', data.user.id);
+  }
+
+  if (data.session) {
+    window.location.href = 'members.html';
+  } else {
+    showMessage('Account created! Check your email to confirm, then log in.', false);
+    btn.disabled = false;
+    btn.textContent = 'Create Account';
+  }
+});
+
+// --- Forgot password ---
+document.getElementById('forgotPasswordBtn').addEventListener('click', async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) {
+    showMessage('Enter your email above first, then click "Forgot password?"', true);
+    return;
+  }
+  const { error } = await sb.auth.resetPasswordForEmail(email);
+  if (error) {
+    showMessage(error.message, true);
+  } else {
+    showMessage('Password reset email sent — check your inbox.', false);
+  }
+});
+</script>
+
+</body>
+</html>
