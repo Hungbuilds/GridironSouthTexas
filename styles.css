@@ -381,6 +381,15 @@ footer{padding:50px 0 30px; border-top:1px solid var(--line);}
 .footer-legal a{color:rgba(168,165,160,0.6);}
 .footer-legal a:hover{color:var(--white);}
 
+.footer-social-icons{display:flex; gap:10px; margin-top:10px;}
+.footer-social-icons a{
+  display:flex; align-items:center; justify-content:center;
+  width:32px; height:32px; border:1px solid var(--line); border-radius:50%;
+  color:var(--white-dim); transition:border-color .2s, color .2s;
+}
+.footer-social-icons a:hover{border-color:var(--red-bright); color:var(--white);}
+.footer-social-icons svg{width:15px; height:15px;}
+
 .footer-social-line{margin-top:2px;}
 .footer-social-line a{display:inline; margin-bottom:0;}
 .footer-social-line .sep{color:rgba(168,165,160,0.5); margin:0 6px;}
