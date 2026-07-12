@@ -208,7 +208,9 @@ document.getElementById('forgotPasswordBtn').addEventListener('click', async () 
     showMessage('Enter your email above first, then click "Forgot password?"', true);
     return;
   }
-  const { error } = await sb.auth.resetPasswordForEmail(email);
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: new URL('reset-password.html', window.location.href).toString()
+  });
   if (error) {
     showMessage(error.message, true);
   } else {
