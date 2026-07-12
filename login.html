@@ -197,11 +197,7 @@ signupForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  // Update the auto-created members row with their name
-  if (data.user) {
-    await sb.from('members').update({ full_name: name }).eq('user_id', data.user.id);
-  }
-
+  // full_name, birthday, and status are now all set server-side by the signup trigger
   if (data.session) {
     window.location.href = 'members.html';
   } else {
