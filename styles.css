@@ -62,6 +62,8 @@ p{color:var(--white-dim);}
 .btn-primary:hover{background:var(--red-bright);}
 .btn-outline{border-color:var(--white); color:var(--white); background:transparent;}
 .btn-outline:hover{background:var(--white); color:var(--black);}
+.btn-dimred{border-color:var(--red-deep); color:var(--white); background:rgba(122,12,29,0.18);}
+.btn-dimred:hover{background:var(--red-deep); border-color:var(--red-deep);}
 
 /* NAV */
 header{
