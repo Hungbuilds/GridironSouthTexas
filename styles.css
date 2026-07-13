@@ -299,6 +299,22 @@ nav{
 }
 .photo-placeholder small{color:rgba(168,165,160,0.6); font-size:11px;}
 
+.schedule-photo-slot{
+  width:100%;
+  border:1px dashed rgba(245,243,239,0.25);
+  background:var(--black-2);
+  padding:70px 24px;
+  text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+}
+.schedule-photo-slot img{max-width:100%; height:auto; display:block; margin:0 auto;}
+.schedule-photo-slot svg{width:40px; height:40px; opacity:0.5;}
+.schedule-photo-slot p{
+  font-family:'Barlow Condensed',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; font-size:15px;
+  color:var(--white-dim);
+}
+.schedule-photo-slot small{color:rgba(168,165,160,0.6); font-size:12px;}
+
 /* FACILITIES (three spots) */
 .facility-grid{display:grid; grid-template-columns:1fr; gap:20px;}
 @media(min-width:700px){.facility-grid{grid-template-columns:repeat(2,1fr);}}
