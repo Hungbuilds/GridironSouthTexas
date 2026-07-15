@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /login.html
+Disallow: /members.html
+Disallow: /reset-password.html
+
+Sitemap: https://gridironfitnesstx.com/sitemap.xml
